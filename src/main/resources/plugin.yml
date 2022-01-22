@@ -1,0 +1,6 @@
+name: Utils
+version: '${project.version}'
+main: fr.puedo.utils.Main
+authors: [Puedo]
+commands:
+  parkour:

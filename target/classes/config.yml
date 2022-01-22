@@ -1,0 +1,11 @@
+JoinMessage: '§aYou joined the parkour'
+LeftMessage: '§cYou left the parkour'
+FinishedParkour: '§6§lCONGRATULATIONS! YOU BEAT THIS PARKOUR IN: '
+TeleportMessage: '§6You teleported to the parkour named: '
+SetStartMessage: '§aSet start point for: '
+SetEndMessage: '§aSet end point for: '
+CreatedMessage: '§aCreated parkour: '
+AlreadyInParkour: '§cYou already started this parkour'
+MustBeInParkour: '§cYou must be in a parkour to reach the end plate! '
+parkour:
+timer:
