@@ -1,5 +1,6 @@
 package fr.puedo.utils;
 
+import fr.puedo.utils.ParkourUtils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -9,13 +10,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 public class ParkourHandler implements CommandExecutor, Listener {
 
-    private Main main;
+    private final Main main;
     public ParkourHandler(Main main){
         this.main = main;
     }
@@ -41,74 +38,52 @@ public class ParkourHandler implements CommandExecutor, Listener {
                         + "§e/parkour remove <parkour> §7- Permanently remove a parkour from the config file! §c(NOT IMPLEMENTED YET)");
                 break;
             case "create":
-                config.createSection("parkour." + a[1] + ".start.x");
-                config.createSection("parkour." + a[1] + ".start.y");
-                config.createSection("parkour." + a[1] + ".start.z");
-
-                config.createSection("parkour." + a[1] + ".cpcount");
-                config.set("parkour." + a[1] + ".cpcount", 0);
-
-
-                config.createSection("parkour." + a[1] + ".end");
-                config.createSection("parkour." + a[1] + ".checkpoints");
-                main.saveConfig();
+                new createParkour(main ,a[1]);
                 p.sendMessage(config.getString("CreateMessage") + a[1]);
                 break;
             case "setstart":
-                config.set("parkour." + a[1] + ".start.x", p.getLocation().getBlockX());
-                config.set("parkour." + a[1] + ".start.y", p.getLocation().getBlockY());
-                config.set("parkour." + a[1] + ".start.z", p.getLocation().getBlockZ());
-                main.saveConfig();
+                new setStart(main, p, a[1]);
                 p.sendMessage(config.getString("SetStartMessage") + a[1]);
                 break;
             case "setend":
-                config.set("parkour." + a[1] + ".end.x", p.getLocation().getBlockX());
-                config.set("parkour." + a[1] + ".end.y", p.getLocation().getBlockY());
-                config.set("parkour." + a[1] + ".end.z", p.getLocation().getBlockZ());
-                main.saveConfig();
+                new setEnd(main, p, a[1]);
                 p.sendMessage(config.getString("SetEndMessage" + a[1]));
                 break;
             case "addcheckpoint":
-                config.createSection("parkour." + a[1] + ".checkpoint." + config.getInt(""));
+                new createCheckpoint(main, a[1], config.getInt("parkour." + a[1] + ".cpcount"), p);
+                p.sendMessage("§aAdded checkpoint!");
+                main.saveConfig();
+                break;
             case "teleport":
-                if(main.getConfig().contains("parkour." + a[1])){
-                    p.teleport(new Location(
-                            Bukkit.getWorld("world"),
-                            config.getDouble("parkour." + a[1] + ".start.x"),
-                            config.getDouble("parkour." + a[1] + ".start.y"),
-                            config.getDouble("parkour." + a[1] + ".start.z")
-                    ));
-                    p.sendMessage(config.getString("TeleportMessage") + a[1]);
-                    break;
-                } else {
-                    p.sendMessage("§cError: this parkour does not exist!");
-                    break;
-                }
+                new teleport(main, p, a[1]);
+                break;
             case "start":
                 main.inParkourPlayers.remove(p.getUniqueId());
-                if(main.getConfig().contains("parkour." + a[1])){
-                    Location totp = new Location(
-                            Bukkit.getWorld("world"),
-                            config.getDouble("parkour." + a[1] + ".start.x"),
-                            config.getDouble("parkour." + a[1] + ".start.y"),
-                            config.getDouble("parkour." + a[1] + ".start.z"));
-
-                    p.teleport(totp);
-                    p.sendMessage(config.getString("TeleportMessage") + a[1]);
-
-                    main.inParkourPlayers.add(p.getUniqueId());
-                    p.sendMessage(config.getString("JoinMessage"));
-                    break;
-                } else {
-                    p.sendMessage("§cError: this parkour does not exist or the starting position isn't correct!");
-                    break;
-                }
+                new teleport(main, p, a[1]);
             case "leave":
-                main.inParkourPlayers.remove(p.getUniqueId());
-                p.sendMessage(config.getString("LeftMessage"));
+                if(main.inParkourPlayers.contains(p.getUniqueId())){
+                    main.inParkourPlayers.remove(p.getUniqueId());
+                    p.sendMessage(config.getString("LeftMessage"));
+                } else { p.sendMessage("§cYou are not in a parkour."); }
+                break;
+            case "rtcp":
+                for(String str : main.getConfig().getConfigurationSection("parkour.").getKeys(false)){
+                    for(String cpstr : main.getConfig().getConfigurationSection("parkour." + str + ".checkpoints.").getKeys(false))
+                    {
+                        if(config.getString("timer." + p.getUniqueId() + ".cp_reached").equals(cpstr))
+                        {
+                            p.teleport(new Location(Bukkit.getWorld("world"),
+                                    config.getDouble("parkour." + str + ".checkpoints." + cpstr + ".x") + 0.5,
+                                    config.getDouble("parkour." + str + ".checkpoints." + cpstr + ".y"),
+                                    config.getDouble("parkour." + str + ".checkpoints." + cpstr + ".z") + 0.5));
+                            p.sendMessage("§bTeleported to the previous checkpoint.");
+                        }
+                    }
+                }
                 break;
             case "remove":
-                config.getList("parkour." + a[1]).clear();
+                if(config.contains("parkour." + a[1])) config.getList("parkour." + a[1]).clear();
+                else p.sendMessage("§cParkour not found.");
                 break;
             case "reloadconfig":
                 main.reloadConfig();

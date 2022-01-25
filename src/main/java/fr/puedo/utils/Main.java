@@ -10,7 +10,6 @@ public final class Main extends JavaPlugin {
 
     List<UUID> inParkourPlayers = new ArrayList<>();
 
-
     @Override
     public void onEnable() {
         System.out.println("§6§lUtils §r§ahas been enabled");

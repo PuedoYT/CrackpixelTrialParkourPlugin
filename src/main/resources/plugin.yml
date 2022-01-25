@@ -1,4 +1,4 @@
-name: Utils
+name: Parkour
 version: '${project.version}'
 main: fr.puedo.utils.Main
 authors: [Puedo]
