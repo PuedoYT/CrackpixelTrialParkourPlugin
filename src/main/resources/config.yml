@@ -7,5 +7,12 @@ SetEndMessage: '§aSet end point for: '
 CreatedMessage: '§aCreated parkour: '
 AlreadyInParkour: '§cYou already started this parkour'
 MustBeInParkour: '§cYou must be in a parkour to reach the end plate! '
+TeleportedToCP: '§aYou teleport to the previous checkpoint.'
+DeletedParkour: '§cYou deleted the parkour: '
+ParkourNotFound: '§cParkour not found.'
+ClearedSessions: '§aSucessfully cleared all parkour sessions.'
+AddedCheckpoint: '§aAdded a checkpoint!'
+CheckpointReached: '§bYou reached the checkpoint '
+EndPositionNotSet: "§cThe end position for this parkour hasn't been set!"
 parkour:
 timer:

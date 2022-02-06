@@ -1,11 +1,11 @@
 package fr.puedo.utils.ParkourUtils;
 
-import fr.puedo.utils.Main;
+import fr.puedo.utils.Parkour;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class createParkour {
-    private Main main;
-    public createParkour(Main main, String parkourName) {
+    private Parkour main;
+    public createParkour(Parkour main, String parkourName) {
         FileConfiguration config = main.getConfig();
         this.main = main;
         config.createSection("parkour." + parkourName + ".start.x");

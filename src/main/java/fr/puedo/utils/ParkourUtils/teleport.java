@@ -1,6 +1,6 @@
 package fr.puedo.utils.ParkourUtils;
 
-import fr.puedo.utils.Main;
+import fr.puedo.utils.Parkour;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 
 public class teleport {
 
-    private Main main;
-    public teleport(Main main, Player p, String ParkourName){
+    private Parkour main;
+    public teleport(Parkour main, Player p, String ParkourName){
         this.main = main;
         FileConfiguration config = main.getConfig();
         if(main.getConfig().contains("parkour." + ParkourName)) {

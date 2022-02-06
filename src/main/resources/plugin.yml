@@ -1,6 +1,6 @@
 name: Parkour
 version: '${project.version}'
-main: fr.puedo.utils.Main
+main: fr.puedo.utils.Parkour
 authors: [Puedo]
 commands:
   parkour:

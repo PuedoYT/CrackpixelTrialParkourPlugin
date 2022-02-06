@@ -1,13 +1,13 @@
 package fr.puedo.utils.ParkourUtils;
 
-import fr.puedo.utils.Main;
+import fr.puedo.utils.Parkour;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 public class createCheckpoint {
-    private Main main;
+    private Parkour main;
 
-    public createCheckpoint(Main main, String parkourName, int CPName, Player p) {
+    public createCheckpoint(Parkour main, String parkourName, int CPName, Player p) {
         this.main = main;
         FileConfiguration config = main.getConfig();
         config.createSection("parkour." + parkourName + ".checkpoints." + CPName + ".x");

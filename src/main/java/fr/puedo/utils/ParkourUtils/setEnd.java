@@ -1,13 +1,13 @@
 package fr.puedo.utils.ParkourUtils;
 
-import fr.puedo.utils.Main;
+import fr.puedo.utils.Parkour;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 public class setEnd {
 
-    private Main main;
-    public setEnd(Main main, Player p, String ParkourName){
+    private Parkour main;
+    public setEnd(Parkour main, Player p, String ParkourName){
         this.main = main;
         FileConfiguration config = main.getConfig();
         config.set("parkour." + ParkourName + ".end.x", p.getLocation().getBlockX());
